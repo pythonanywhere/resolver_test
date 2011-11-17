@@ -10,7 +10,7 @@ except ImportError:
     import unittest
 from urlparse import urljoin
 
-from mock import MagicMock, Mock
+from mock import call, MagicMock, Mock
 
 import django
 from django.conf import settings
@@ -45,15 +45,6 @@ class ResolverTestSuiteRunner(DjangoTestSuiteRunner):
                 filtered_suite.addTest(test)
         return DjangoTestSuiteRunner.run_suite(self, filtered_suite, **kwargs)
 
-
-def create_suite_for_file_directory(file):
-    def suite():
-        start_dir = dirname(file)
-        return unittest.defaultTestLoader.discover(
-            start_dir,
-            top_level_dir=join(dirname(__file__), "..")
-        )
-    return suite
 
 
 def die(exception=None):
