@@ -1,4 +1,4 @@
-﻿# Copyright (c) 2011 Resolver Systems Ltd.
+# Copyright (c) 2011 Resolver Systems Ltd.
 # All Rights Reserved
 #
 
@@ -7,6 +7,7 @@ try:
 except ImportError:
     import unittest
 
+from datetime import timedelta
 from mock import call
 
 
@@ -23,6 +24,13 @@ class ResolverTestMixins(object):
 
     def assert_decorated_with(self, fn, decorator):
         self.assertIn(decorator.__name__, fn.decorated_by)
+
+
+    def assert_datetime_approximately_equals(self, actual, expected, minutes_leeway=10):
+        self.assertTrue(
+            expected - timedelta(minutes=minutes_leeway) <= actual <= expected + timedelta(minutes=minutes_leeway),
+            "%r is not within %s minutes of %r" % (actual, minutes_leeway, expected)
+        )
 
 
 
