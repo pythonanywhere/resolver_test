@@ -42,7 +42,7 @@ class ResolverTestCase(unittest.TestCase, ResolverTestMixins):
 def die(exception=None):
     if exception is None:
         exception = AssertionError('die called')
-    def inner_die(*_):
+    def inner_die(*_, **__):
         raise exception
     return inner_die
 
