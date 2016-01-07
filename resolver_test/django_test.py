@@ -16,9 +16,20 @@ from django.http import HttpRequest, HttpResponseRedirect
 
 
 
-
 class ResolverDjangoTestCase(django.test.TestCase, ResolverTestMixins):
     maxDiff = None
+
+
+class ResolverViewTestCase(ResolverDjangoTestCase):
+
+    def setUp(self):
+        self.user = User(username='cherie')
+        self.user.save()
+
+        self.request = HttpRequest()
+        self.request.session = Mock()
+        self.request.user = self.user
+
 
     def assert_redirects_to(self, response, redirect_url):
         self.assertTrue(isinstance(response, HttpResponseRedirect), "Response is not a redirect")
@@ -38,15 +49,4 @@ class ResolverDjangoTestCase(django.test.TestCase, ResolverTestMixins):
             urljoin(settings.LOGIN_URL, '?next=my_path')
         )
 
-
-
-class ResolverViewTestCase(ResolverDjangoTestCase):
-
-    def setUp(self):
-        self.user = User(username='cherie')
-        self.user.save()
-
-        self.request = HttpRequest()
-        self.request.session = Mock()
-        self.request.user = self.user
 
