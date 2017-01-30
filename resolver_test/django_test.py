@@ -30,6 +30,8 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
         self.request.session = Mock()
         self.request.user = self.user
 
+        self.client.force_login(self.user)
+
 
     def assert_redirects_to(self, response, redirect_url):
         self.assertTrue(isinstance(response, HttpResponseRedirect), "Response is not a redirect")
