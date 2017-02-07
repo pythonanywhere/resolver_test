@@ -11,7 +11,7 @@ from resolver_test import ResolverTestMixins
 import django
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, User
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
 
 
 
@@ -33,12 +33,6 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
         self.client.force_login(self.user)
 
 
-    def assert_redirects_to(self, response, redirect_url):
-        self.assertTrue(isinstance(response, HttpResponseRedirect), "Response is not a redirect")
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response['Location'], redirect_url)
-
-
     def assert_login_required(self, view_to_call):
         self.owner = self.request.user = AnonymousUser()
         self.request.get_full_path = lambda: "my_path"
@@ -46,9 +40,9 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
 
         response = view_to_call()
 
-        self.assert_redirects_to(
-            response,
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(
+            response['Location'],
             urljoin(settings.LOGIN_URL, '?next=my_path')
         )
-
 
