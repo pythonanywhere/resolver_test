@@ -1,4 +1,4 @@
-# Copyright (c) 2011 Resolver Systems Ltd.
+# Copyright (c) 2017 PythonAnywhere LLP.
 # All Rights Reserved
 #
 
@@ -20,11 +20,15 @@ class ResolverDjangoTestCase(django.test.TestCase, ResolverTestMixins):
     maxDiff = None
 
 
+
+usernumber = 0
+
 class ResolverViewTestCase(ResolverDjangoTestCase):
 
     def setUp(self):
-        self.user = User(username='cherie')
-        self.user.save()
+        global usernumber
+        self.user = User.objects.create(username='cherie{}'.format(usernumber))
+        usernumber += 1
 
         self.request = HttpRequest()
         self.request.session = Mock()
