@@ -2,7 +2,7 @@
 # All Rights Reserved
 #
 
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 from mock import Mock
 
