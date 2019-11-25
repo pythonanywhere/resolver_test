@@ -12,7 +12,7 @@ class ResolverTestMixins(object):
     def assertCalledOnce(self, mock, *args, **kwargs):
         if mock.call_args_list == []:
             self.fail('Not called')
-        self.assertEquals(mock.call_args_list, [call(*args, **kwargs)])
+        self.assertEqual(mock.call_args_list, [call(*args, **kwargs)])
 
 
     def assert_decorated_with(self, fn, decorator):

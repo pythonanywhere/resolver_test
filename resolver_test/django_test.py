@@ -44,8 +44,8 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
 
         response = view_to_call()
 
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
             response['Location'],
             urljoin(settings.LOGIN_URL, '?next=my_path')
         )
