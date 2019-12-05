@@ -4,7 +4,7 @@
 
 import unittest
 from datetime import timedelta
-from mock import call
+from mock import call, MagicMock
 
 
 class ResolverTestMixins(object):
@@ -43,4 +43,16 @@ def die(exception=None):
 
 def is_iterable(seq):
     return hasattr(seq, "__iter__")
+
+
+def create_mock_context_manager():
+    mock_cm_class = MagicMock()
+    mock_cm = mock_cm_class.return_value
+    mock_cm.__enter__.return_value = mock_cm
+
+    def check_used_as_context_manager():
+        return mock_cm.__enter__.called is True and mock_cm.__exit__.called is True
+
+    mock_cm.check_used_as_context_manager = check_used_as_context_manager
+    return mock_cm_class
 
