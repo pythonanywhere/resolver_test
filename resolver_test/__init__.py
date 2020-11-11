@@ -4,7 +4,7 @@
 
 import unittest
 from datetime import timedelta
-from mock import call, MagicMock
+from unittest.mock import call, MagicMock
 
 
 class ResolverTestMixins(object):
@@ -12,7 +12,7 @@ class ResolverTestMixins(object):
     def assertCalledOnce(self, mock, *args, **kwargs):
         if mock.call_args_list == []:
             self.fail('Not called')
-        self.assertEqual(mock.call_args_list, [call(*args, **kwargs)])
+        self.assertListEqual(mock.call_args_list, [call(*args, **kwargs)])
 
 
     def assert_decorated_with(self, fn, decorator):
