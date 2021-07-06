@@ -3,8 +3,7 @@
 #
 
 from urllib.parse import urljoin
-
-from mock import Mock
+from unittest.mock import Mock
 
 from resolver_test import ResolverTestMixins
 
