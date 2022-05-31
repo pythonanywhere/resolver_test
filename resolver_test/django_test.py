@@ -9,6 +9,7 @@ from resolver_test import ResolverTestMixins
 
 import django
 from django.conf import settings
+from django.core.cache import caches
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest
 
@@ -25,6 +26,8 @@ usernumber = 0
 class ResolverViewTestCase(ResolverDjangoTestCase):
 
     def setUp(self):
+        super().setUp()
+        caches["django-ratelimit"].clear()
         global usernumber
         self.user = User.objects.create(username='cherie{}'.format(usernumber))
         usernumber += 1
