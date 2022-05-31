@@ -9,7 +9,7 @@ from resolver_test import ResolverTestMixins
 
 import django
 from django.conf import settings
-from django.core.cache import caches
+from django.core.cache import caches, InvalidCacheBackendError
 from django.contrib.auth.models import AnonymousUser, User
 from django.http import HttpRequest
 
@@ -27,9 +27,10 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
 
     def setUp(self):
         super().setUp()
-        ratelimit_cache = caches.get("django-ratelimit")
-        if ratelimit_cache is not None:
-            ratelimit_cache.clear()
+        try:
+            caches["django-ratelimit"].clear()
+        except InvalidCacheBackendError:
+            pass
         global usernumber
         self.user = User.objects.create(username='cherie{}'.format(usernumber))
         usernumber += 1
