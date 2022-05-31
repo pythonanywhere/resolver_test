@@ -27,7 +27,9 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
 
     def setUp(self):
         super().setUp()
-        caches["django-ratelimit"].clear()
+        ratelimit_cache = caches.get("django-ratelimit")
+        if ratelimit_cache is not None:
+            ratelimit_cache.clear()
         global usernumber
         self.user = User.objects.create(username='cherie{}'.format(usernumber))
         usernumber += 1
