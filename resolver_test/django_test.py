@@ -32,7 +32,7 @@ class ResolverViewTestCase(ResolverDjangoTestCase):
         except InvalidCacheBackendError:
             pass
         global usernumber
-        self.user = User.objects.create(username='cherie{}'.format(usernumber))
+        self.user = User.objects.create(username='cherie{}'.format(usernumber), email="a@b.com")
         usernumber += 1
 
         self.request = HttpRequest()
